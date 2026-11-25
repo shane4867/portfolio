@@ -1,0 +1,4 @@
+import {useCollections} from '../../hooks/portfolio/useCollections';
+import {imgAttrs} from '../../wix/media';
+import type {CollectionSummary} from '../../wix/portfolio/types';
+export default function Gallery(props:{initialCollections?:CollectionSummary[]}){const {collections,error}=useCollections(props);return <section className="section"><div className="section-head"><h2>컬렉션</h2></div>{error&&<p className="error">컬렉션을 불러오지 못했습니다.</p>}{collections===null?<p className="loading">불러오는 중…</p>:<div className="grid">{collections.map(c=><a key={c.id} className="project-card" href={'/portfolio/'+c.slug}><div className="image-box">{c.imageUrl?<img {...imgAttrs(c.imageUrl,'33vw',.8)} alt={c.title}/>:<span className="empty-cross">+</span>}</div><h3>{c.title}</h3><p>{c.description}</p></a>)}</div>}</section>}

@@ -1,0 +1,23 @@
+---
+// Collections gallery — data fetched SERVER-SIDE (SEO) and handed to the island as DTO props.
+// Keep this frontmatter; swap the island import to YOUR gallery component.
+import SiteLayout from "../layouts/SiteLayout.astro";
+import CollectionsView from "../components/portfolio/Gallery";
+import ProjectGrid from "../components/portfolio/ProjectGrid";
+import Slots from "../components/portfolio/Slots";
+import { fetchCollections, fetchProjects } from "../wix/portfolio/portfolio";
+import type { CollectionSummary } from "../wix/portfolio/types";
+
+let projects=[];let loadError=false;
+let collections: CollectionSummary[] = [];
+try {
+  collections = await fetchCollections();
+  projects = await fetchProjects({limit:100});
+} catch {
+  loadError=true;
+  // An unguarded SSR throw truncates the response mid-stream; the island renders the
+  // empty state instead.
+}
+---
+
+<SiteLayout><section class="page-heading"><p class="eyebrow">PROJECT ARCHIVE</p><h1>공간의 기록<span class="accent">.</span></h1><p>관찰과 질문이 공간으로 이어지는 과정.<br/>설계의 시작부터 완성까지, 프로젝트를 모아갑니다.</p></section><section class="project-space">{loadError?<p class="error">프로젝트를 불러오지 못했습니다. 잠시 후 다시 방문해 주세요.</p>:projects.length?<ProjectGrid projects={projects}/>:<><Slots/><p class="empty-explain">아직 공개된 프로젝트가 없습니다. 새로운 작업이 이곳에 채워질 예정입니다.</p></>}</section></SiteLayout>

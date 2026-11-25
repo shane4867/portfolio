@@ -1,0 +1,8 @@
+---
+import "../styles/global.css";
+interface Props { title?: string; description?: string; }
+const {title,description}=Astro.props;
+const path=Astro.url.pathname;
+---
+<!doctype html><html lang="ko"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>{title&&<title>{title} | Bang (sic)</title>}{description&&<meta name="description" content={description}/>}{title&&<meta property="og:title" content={title}/>}{description&&<meta property="og:description" content={description}/>}<slot name="seo-tags"/></head>
+<body><a class="skip" href="#main">본문으로 이동</a><div class="site-shell"><header class="site-header"><a href="/" class="brand" aria-label="Bang (sic) 홈"><span class="logo-script">Bang</span> <em>(sic)</em></a><nav aria-label="주 메뉴"><a href="/" aria-current={path==='/'?'page':undefined}>홈</a><a href="/portfolio" aria-current={path.startsWith('/portfolio')?'page':undefined}>프로젝트</a><a href="/about" aria-current={path==='/about'?'page':undefined}>소개</a></nav><a class="contact-pill" href="/about#contact">연락하기 <span aria-hidden="true">↗</span></a></header><main id="main"><slot/></main><footer><span>© 2026 Bang (sic) · 방승준</span><span>공간을 관찰하고, 경험을 설계합니다</span><a href="https://www.instagram.com/shane4867/" target="_blank" rel="noopener noreferrer">Instagram ↗</a></footer></div></body></html>

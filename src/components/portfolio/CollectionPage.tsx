@@ -1,0 +1,4 @@
+import {useCollectionProjects} from '../../hooks/portfolio/useCollectionProjects';
+import ProjectGrid from './ProjectGrid';
+import type {CollectionSummary,ProjectSummary} from '../../wix/portfolio/types';
+export default function CollectionPage(props:{slug:string;initialCollection?:CollectionSummary;initialProjects?:ProjectSummary[]}){const {collection,notFound,projects,error}=useCollectionProjects(props.slug,props);if(notFound)return <h1>컬렉션을 찾을 수 없습니다</h1>;return <><div className="page-heading"><h1>{collection?.title||'불러오는 중…'}</h1><p>{collection?.description}</p></div>{error&&<p className="error">컬렉션을 불러오지 못했습니다.</p>}{projects===null?<p className="loading">불러오는 중…</p>:projects.length?<ProjectGrid projects={projects}/>:<p>아직 공개된 프로젝트가 없습니다.</p>}</>}

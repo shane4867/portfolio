@@ -1,0 +1,3 @@
+import {imgAttrs} from '../../wix/media';
+import type {ProjectSummary} from '../../wix/portfolio/types';
+export default function ProjectGrid({projects}:{projects:ProjectSummary[]}){return <div className="grid">{projects.map(p=><a className="project-card" key={p.id} href={'/projects/'+p.slug}><div className="image-box">{p.imageUrl?<img {...imgAttrs(p.imageUrl,'(min-width: 900px) 33vw, 100vw',.8)} alt={p.title}/>:<span className="empty-cross" aria-hidden="true">+</span>}</div><h2>{p.title}</h2>{p.description&&<p>{p.description}</p>}</a>)}</div>}
